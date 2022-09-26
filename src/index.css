@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+;
+
+body {
+  margin: 0;
+  font-family: 'Rubik', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: black !important;
+  color: white !important;
+}
+
+code {
+  font-family: 'Rubik', sans-serif !important;
+}
+
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.css-hyum1k-MuiToolbar-root {
+  background: #000 !important;
+}
+
+header.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorPrimary.MuiAppBar-positionFixed.mui-fixed.css-ky6m1t-MuiPaper-root-MuiAppBar-root {
+  background: #000 !important;
+}
+
+.story {
+  position: relative;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 110px;
+  height: 160px;
+  box-shadow: 0px 5px 17px -7px rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  margin-right: 10px;
+  transition: transform 100ms ease-in;
+  cursor: pointer;
+}
+
+.story:hover {
+  transform: scale(1.07);
+}
+
+.story h4 {
+  position: absolute;
+  bottom: 10px;
+  font-size: 14px;
+  left: 10px;
+  color: black;
+}
+
+.storyAvatar {
+  margin: 10px;
+  border: 5px solid rgba(0, 0, 0, 0.25);
+  position: absolute !important;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  bottom: center;
+  left: 50% !important;
+  top: 50% !important;
+  margin-left: -20px;
+  margin-top: -20px;
+}
+img.MuiAvatar-img.css-1pqm26d-MuiAvatar-img{
+  border-radius: 50%;
+}
+
+a {
+  text-decoration: none !important;
+  color: white !important;
+  text-transform: capitalize !important; 
+  font-weight: 500;
+  margin: 10px;
+
+}
+
+.is-sticky {
+  position: fixed;
+  display: block;
+  top: 60px;
+  width: 60%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  z-index: 9999;
+  box-shadow: 0 2px 24px 0 rgb(0 0 0 / 15%);
+  animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.isSticky {
+  background-color: 'rgba(0, 0, 0,0.5)'
+}
+
+.isNotSticky {
+  background-color: 'rgba(255, 255, 255,0.1)'
+}
+
+button {
+  font-family: 'Rubik', sans-serif !important;
+  text-transform: capitalize !important;
+  font-weight: 500;
+}
+
+.MuiBox-root.css-nv1v7g, .footer-position{
+  min-height: calc(100vh - 34px);
+}
+.footer-size{
+  position: relative;
+  left: 0;
+  bottom: 0
+}

@@ -1,0 +1,71 @@
+ 
+import React, { useEffect, useState } from 'react'
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { Button, Chip, Divider } from '@mui/material';
+import { FlagCircleOutlined, FlagCircleTwoTone } from '@mui/icons-material';
+import FlagIcon from '@mui/icons-material/Flag';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+
+function Overview(props) {
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
+    useEffect(() => {
+        props.data && props.data.map((e) => {
+            setTitle(e.name);
+            setDescription(e.description);
+        })
+    }, [props])
+
+    return (
+        < >
+            <div className='col mt-4'>
+                <Typography variant='h2'>{title}</Typography>
+                <Typography variant='body' color="text.secondary">{description}</Typography>
+
+                <Card sx={{ maxWidth: 345, margin: '20px 0' }} >
+                     
+                    <CardContent >
+                        <Typography gutterBottom variant="body2" color="text.secondary">
+                            10 days left
+                        </Typography>
+                        <Typography gutterBottom variant="h6" component="div">
+                        <CalendarMonthIcon style={{ fontSize: '20px' }} /> 10 Aug - 20 Aug
+                        </Typography>
+
+                        <Divider style={{ border:'0.5px solid white', margin:'5px 0'}}/>
+
+                        <div className='d-flex justify-content-between'>
+                            <Typography gutterBottom variant="body" color="text.secondary">
+                                <span style={{ color: '#fff ' }}>$1000</span> in Prizes
+                            </Typography>
+                            <Typography gutterBottom variant="body" color="text.secondary">
+                                <span style={{ color: '#fff ' }}>1034</span>  participants
+                            </Typography>
+                        </div>
+                        <Divider style={{ border:'0.5px solid white', margin:'5px 0'}}/>
+                        <Typography gutterBottom variant="h6" component="div">
+                        <FlagIcon style={{ fontSize: '20px' }} />  <Chip label="Polygon" variant="outlined" />
+                        </Typography>
+
+                        <Typography gutterBottom variant="h6" component="div">
+                        <LocalOfferIcon style={{ fontSize: '20px' }} />  <Chip label="Meme" variant="outlined" /> <Chip label="crypto" variant="outlined" /> <Chip label="Polygon" variant="outlined" />
+                        </Typography>
+                         
+                    </CardContent> 
+                </Card>
+
+            </div>
+
+        </ >
+    )
+}
+
+export default Overview

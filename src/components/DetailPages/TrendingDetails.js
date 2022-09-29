@@ -12,7 +12,7 @@ import { profileById } from '../../context/query';
 import { LensAuthContext } from '../../context/LensContext';
 import { createComment } from '../../LensProtocol/post/comments/create-comment';
 import { toast } from 'react-toastify';
-import { getPublicationByLatest } from '../../LensProtocol/post/explore/explore-publications';
+import { getPublicationByLatest, getPublicationByUser } from '../../LensProtocol/post/explore/explore-publications';
 import { getComments, posts } from '../../LensProtocol/post/get-post';
 import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
 import { addReaction } from '../../LensProtocol/reactions/add-reaction';
@@ -23,6 +23,7 @@ import { whoCollected } from '../../LensProtocol/post/collect/collect';
 import { addDoc, collection, doc, getDocs, query, runTransaction, setDoc, where, writeBatch, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from '../../firebase/firebase';
 import { useTheme } from '@mui/system';
+import useInfiniteScroll from '../useInfiniteScroll';
 
 const tags = [
   "#tuesday ",
@@ -102,6 +103,39 @@ function TrendingDetails() {
   const handleShowComment = () => {
     setShowComment(!showComment);
   };
+
+  const [Items, setItems] = useState([]);
+    const [isFetching, setIsFetching] = useState(false); 
+    const [page, setPage] = useState("{\"timestamp\":1,\"offset\":0}"); 
+    const [HasMore, setHasMore] = useState(true); 
+
+
+    const [lastElementRef] = useInfiniteScroll(
+        HasMore ? loadMoreItems : () => { },
+        isFetching
+    );  
+   
+
+    useEffect(() => {
+        loadMoreItems();
+    }, [])
+
+
+
+    async function loadMoreItems() {
+        setIsFetching(true);  
+        const results = await getPublicationByUser(page).then((res) => { 
+          setPosts((prevTitles) => {
+                    return [...new Set([...prevTitles, ...res.data.explorePublications.items.map((b) => b)])];
+                });
+                setPage(res.data.explorePublications.pageInfo.next);
+                setHasMore(res.data.explorePublications.items.length > 0);
+                setIsFetching(false);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
 
 
 
@@ -349,10 +383,11 @@ function TrendingDetails() {
                 <ImageList variant="masonry" cols={greaterThanMid && 2 || smallToMid && 2 || lessThanSmall && 1 || xsmall && 1} gap={12}>
                   {
 
-                    posts && posts.map((e) => {
+                    posts && posts.map((e,i) => {
                       return (
                         <ImageListItem
-                          key={e.id}
+                        ref={lastElementRef}
+                          key={i}
                           style={{ cursor: 'pointer' }}
                           onClick={() => handleNavigate(e)}
                         >

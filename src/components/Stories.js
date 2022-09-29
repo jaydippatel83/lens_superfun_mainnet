@@ -13,6 +13,8 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { LensAuthContext } from '../context/LensContext';
 import moment from 'moment';
 import { Box } from '@mui/system';
+import useInfiniteScroll from './useInfiniteScroll';
+import { getPublicationByUser } from '../LensProtocol/post/explore/explore-publications';
 
 
 function Stories() {
@@ -22,19 +24,16 @@ function Stories() {
     const [data, setData] = useState();
 
     const navigate = useNavigate();
-    // const [storyItem, setStoryItem] = useState(storyData);
-    const [hasMore, setHasmore] = useState(true);
-    const [lastPosition, setLastPosition] = useState(0);
-    const perPage = 4;
+   
 
-
-    const loadProducts = useCallback(() => {
-        setTimeout(() => {
-            // setStoryItem((prev) => [...prev, ...prev]);
-        }, 500);
-
-        // setLastPosition(lastPosition + perPage);
-    }, []);
+    const [Items, setItems] = useState([]);
+    const [isFetching, setIsFetching] = useState(false); 
+    const [page, setPage] = useState("{\"timestamp\":1,\"offset\":0}"); 
+    const [HasMore, setHasMore] = useState(true); 
+    const [lastElementRef] = useInfiniteScroll(
+        HasMore ? loadMoreItems : () => { },
+        isFetching
+    ); 
 
 
     const handleNavigate = (id) => {
@@ -42,29 +41,35 @@ function Stories() {
     }
 
     useEffect(() => {
-        var arry = [];
-        
-        userPosts && userPosts.map((e) => {
-            console.log(e, "eee");
-            // var rr= e.metadata?.media?.length != 0 && e.metadata?.media[0]?.original?.url;
-            // console.log(rr,"rrr");
-            // var res = rr.substring(0, 7);
-            if (e.metadata?.media?.length != 0) {
-                arry.push(e);
-            }
-        })
-        setData(arry);
+        loadMoreItems();
     }, [userPosts])
 
 
-    const replaceUrl=(e)=>{
-        const str = e && e.startsWith("ipfs://"); 
-        if(str){
-            const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7); 
+
+    async function loadMoreItems() {
+        setIsFetching(true);  
+        const results = await getPublicationByUser(page).then((res) => { 
+                setItems((prevTitles) => {
+                    return [...new Set([...prevTitles, ...res.data.explorePublications.items.map((b) => b)])];
+                });
+                setPage(res.data.explorePublications.pageInfo.next);
+                setHasMore(res.data.explorePublications.items.length > 0);
+                setIsFetching(false);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+
+
+    const replaceUrl = (e) => {
+        const str = e && e.startsWith("ipfs://");
+        if (str) {
+            const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7);
             return res;
         }
-        return e; 
-      }
+        return e;
+    }
 
 
     return (
@@ -79,22 +84,21 @@ function Stories() {
                 </div>
 
                 {
-                    userPosts.length == 0 && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    Items.length == 0 && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <CircularProgress />
                     </Box>
                 }
                 {
-                    userPosts == undefined && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    Items == undefined && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <h4>No data Available</h4>
                     </Box>
                 }
 
 
                 {
-                    data && data.map((item, i) => {
-                        console.log(item,"item");
+                    Items && Items.map((item, i) => { 
                         return (
-                            <div className='col-12 col-sm-6 col-md-3 col-lg-3 p-2' key={i}>
+                            <div ref={lastElementRef} key={i} className='col-12 col-sm-6 col-md-3 col-lg-3 p-2'>
                                 <ImageListItem
                                     style={{ cursor: 'pointer' }}
                                     onMouseEnter={e => {
@@ -167,7 +171,7 @@ function Stories() {
                                     }
                                 </ImageListItem>
                             </div>
-                        )
+                        ) 
                     })
                 }
             </div>

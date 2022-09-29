@@ -361,12 +361,24 @@ export const getPublicationByLatest= async()=>{
      return result;
 }
 
-export const getPublicationByUser= async()=>{
+
+// request: {
+//   publicationTypes: POST
+//   sortCriteria: LATEST
+//   timestamp: 1662358615000
+//   limit: 50
+//   cursor: "{\"timestamp\":1662358615000,\"offset\":6429,\"randomizer\":2}"
+// }
+
+
+export const getPublicationByUser= async(data)=>{
   const query =  {
       "sortCriteria": "LATEST", 
       "publicationTypes": ['POST','COMMENT', 'MIRROR'],  
       // "sources": ["superfun"], 
+      // "timestamp": data.timestamp,
       "limit": 50,
+      "cursor": data
    }
 
    const result = await explorePublications(query); 

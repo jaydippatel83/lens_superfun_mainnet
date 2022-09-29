@@ -4,9 +4,10 @@ import omitDeep from 'omit-deep';
 // This code will assume you are using MetaMask.
 // It will also assume that you have already done all the connecting to metamask
 // this is purely here to show you how the public API hooks together
-export const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+// export const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
 
 export const getSigner = () => {
+  const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
     return ethersProvider.getSigner();
 }
 
@@ -48,6 +49,7 @@ export const splitSignature = (signature) => {
 }
 
 export const sendTx = (transaction) => {
+  const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = ethersProvider.getSigner();
   return signer.sendTransaction(transaction);
 }

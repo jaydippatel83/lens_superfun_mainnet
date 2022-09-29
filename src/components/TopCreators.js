@@ -12,6 +12,7 @@ import { getPublicationByUser } from '../LensProtocol/post/explore/explore-publi
 function TopCreators() {
 
     const [story, setStory] = useState([]);
+    const [offset, setOffset]= useState("{\"timestamp\":1,\"offset\":0}");
 
 
     useEffect(() => {
@@ -21,8 +22,10 @@ function TopCreators() {
 
             const res = await exploreProfile(); 
             // setStory(res.exploreProfiles.items);
-            const dd= await getPublicationByUser(); 
-            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{ 
+            const dd= await getPublicationByUser(offset); 
+            setOffset(dd.data.explorePublications.pageInfo.next);
+            console.log(dd,"dd");
+            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{  
                 if(e.__typename == "Comment"){
                     user.push(e.mainPost.profile);
                 }else if (e.__typename == "Mirror"){

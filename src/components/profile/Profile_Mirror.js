@@ -27,6 +27,15 @@ function Profile_Mirror(props) {
     const handleNavigate = (item) => {
         navigate(`/trendingDetails/${item.id}`)
     } 
+
+    const replaceUrl=(e)=>{
+        const str = e && e.startsWith("ipfs://"); 
+        if(str){
+            const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7); 
+            return res;
+        }
+        return e; 
+      }
     return (
         <div className='row'>
             <div className='col'>
@@ -50,8 +59,8 @@ function Profile_Mirror(props) {
                                         <Avatar
                                             src={item.__typename === "Mirror" ?
                                                 item.mirrorOf.profile.picture != null &&
-                                                item.mirrorOf.profile.picture.original.url :
-                                                item.profile.picture != null ? item.profile.picture.original.url :
+                                                replaceUrl(item?.mirrorOf?.profile?.picture?.original?.url) :
+                                                item.profile.picture != null ? replaceUrl(item?.profile?.picture?.original?.url) :
                                                     'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                                         </Avatar>
@@ -63,7 +72,7 @@ function Profile_Mirror(props) {
                                 <CardMedia
                                   onClick={() => handleNavigate(item.mirrorOf)} 
                                     component="img"
-                                    image={item.__typename === "Mirror" ? item.mirrorOf.metadata.media[0].original.url : item.metadata.media[0].original.url}
+                                    image={item.__typename === "Mirror" ? replaceUrl(item?.mirrorOf?.metadata?.media[0]?.original?.url) : replaceUrl(item?.metadata?.media[0]?.original?.url)}
                                     alt={item.__typename === "Mirror" ? item.mirrorOf.metadata.name : item.metadata.name}
                                     sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
                                 />

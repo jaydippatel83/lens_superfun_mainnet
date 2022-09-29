@@ -180,8 +180,16 @@ function Profile() {
         }
 
     }  
-    
-    console.log(data,"data");
+
+    const replaceUrl=(e)=>{
+        const str = e && e.startsWith("ipfs://"); 
+        if(str){
+            const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7); 
+            return res;
+        }
+        return e; 
+      }
+     
     return (
         < >
             <Header />
@@ -199,7 +207,7 @@ function Profile() {
                             {
                                 data && <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                     <div className='text-center'>
-                                        <img src={data.picture != null ? data?.picture?.original?.url : '/assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
+                                        <img src={data.picture != null ? replaceUrl(data?.picture?.original?.url) : '/assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
                                         <h5 className='pt-4' style={{ fontWeight: '600' }}>{data.handle}</h5>
                                         <h6 className='' style={{ fontWeight: '600' }}>{`@${data.handle.trim().toLowerCase()}`}</h6>
                                         {/* <p>{e.description}</p> */}
@@ -252,8 +260,8 @@ function Profile() {
                                                         <Avatar
                                                             src={detail.__typename === "Comment" ?
                                                                 detail.mainPost.profile.picture != null &&
-                                                                detail.mainPost.profile.picture.original.url :
-                                                                detail.profile.picture != null ? detail.profile.picture.original.url :
+                                                                replaceUrl(detail?.mainPost?.profile?.picture?.original?.url) :
+                                                                    detail.profile.picture != null ? replaceUrl(detail?.profile?.picture?.original?.url) :
                                                                     'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                                                         </Avatar>
@@ -264,7 +272,7 @@ function Profile() {
                                                 />
                                                 <CardMedia
                                                     component="img"
-                                                    image={detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
+                                                    image={detail.__typename === "Comment" ? replaceUrl(detail?.mainPost?.metadata?.media[0]?.original?.url) : replaceUrl(detail?.metadata?.media[0]?.original?.url)}
                                                     alt={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                                                     sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
                                                 />
@@ -292,7 +300,7 @@ function Profile() {
                                                     <div className='m-2' style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                                         <div className="d-flex justify-content-around mt-2">
                                                             <div className="p-0">
-                                                                <Avatar src={profile.picture != null ? profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
+                                                                <Avatar src={profile?.picture != null ? replaceUrl(profile?.picture?.original?.url ): "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
                                                             </div>
                                                             <form className="col-10 header-search ms-3 d-flex align-items-center">
                                                                 <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
@@ -313,7 +321,7 @@ function Profile() {
                                                                 return (
                                                                     <div style={{ margin: '20px' }} key={e.id}>
                                                                         <div className="p-0 d-flex " style={{ padding: '10px' }}>
-                                                                            <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                                                            <Avatar src={e.__typename === "Comment" ? replaceUrl(e.profile?.picture?.original?.url) : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
                                                                             <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
                                                                         </div>
                                                                         <p style={{

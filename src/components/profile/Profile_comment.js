@@ -31,6 +31,15 @@ function Profile_comment(props) {
         navigate(`/trendingDetails/${item.id}`)
     }
 
+    const replaceUrl=(e)=>{
+        const str = e && e.startsWith("ipfs://"); 
+        if(str){
+            const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7); 
+            return res;
+        }
+        return e; 
+      }
+
 
     return (
         <div className='row'>
@@ -54,8 +63,8 @@ function Profile_comment(props) {
                                         <Avatar
                                             src={item.__typename === "Comment" ?
                                                 item.mainPost.profile.picture != null &&
-                                                item.mainPost.profile.picture.original.url :
-                                                item.profile.picture != null ? item.profile.picture.original.url :
+                                                replaceUrl(item?.mainPost?.profile?.picture?.original?.url) :
+                                                item.profile.picture != null ? replaceUrl(item?.profile?.picture?.original?.url) :
                                                     'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                                         </Avatar>
@@ -67,7 +76,7 @@ function Profile_comment(props) {
                                 <CardMedia
                                     onClick={() => handleNavigate(item.mainPost)}
                                     component="img"
-                                    image={item.__typename === "Comment" ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}
+                                    image={item.__typename === "Comment" ? replaceUrl(item?.mainPost?.metadata?.media[0]?.original?.url) : replaceUrl(item?.metadata?.media[0]?.original?.url)}
                                     alt={item.__typename === "Comment" ? item.mainPost.metadata.name : item.metadata.name}
                                     sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
                                 />
@@ -94,7 +103,7 @@ function Profile_comment(props) {
 
                                     <div style={{ margin: '20px' }}>
                                         <div className="p-0 d-flex " style={{ padding: '10px' }}>
-                                            <Avatar src={item.__typename === "Comment" ? item.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                            <Avatar src={item.__typename === "Comment" ? replaceUrl(item.profile?.picture?.original?.url) : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
                                             <p className='mb-0 align-self-center ml-2'>{item.__typename === "Comment" ? item.profile.handle : item.profile.handle}</p>
                                         </div>
                                         <p style={{

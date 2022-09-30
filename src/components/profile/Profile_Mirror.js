@@ -50,8 +50,7 @@ function Profile_Mirror(props) {
                     </Box>
                 }
                 {
-                    data && data.map((item) => { 
-                        console.log(item,"item");
+                    data && data.map((item) => {  
                         return (
                             <Card key={item.id}  style={{margin:'10px 0'}} >
                                 <CardHeader

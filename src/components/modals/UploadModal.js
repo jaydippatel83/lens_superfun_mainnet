@@ -87,8 +87,7 @@ export default function UploadModal() {
             login: login,
             name: profile.handle
         } 
-        const res = await createPost(postData); 
-        console.log(res,"res"); 
+        const res = await createPost(postData);  
         if(res){
             setUpdate(!update);
             setFile("");

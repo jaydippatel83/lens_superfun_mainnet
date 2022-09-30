@@ -50,7 +50,7 @@ function StorieList() {
 
     async function loadMoreItems() {
         setIsFetching(true);  
-        const results = await getPublicationByUser(page).then((res) => { 
+        const results = await getPublicationByUser(page).then((res) => {  
                 setItems((prevTitles) => {
                     return [...new Set([...prevTitles, ...res.data.explorePublications.items.map((b) => b)])];
                 });
@@ -62,6 +62,7 @@ function StorieList() {
                 console.log(e);
             });
     }
+ 
 
     return (
         <>

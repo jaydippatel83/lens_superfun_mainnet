@@ -23,8 +23,7 @@ function Profile_Collect(props) {
     }, [props.user])
 
     async function getComments() {
-        const data = await postsByMirror(props.user.id) 
-        console.log(data,"data");
+        const data = await postsByMirror(props.user.id)  
         setData(data.data.publications.items);
     }
 

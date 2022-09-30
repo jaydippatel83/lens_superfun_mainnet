@@ -12,8 +12,7 @@ import uploadIpfs from './ipfs'
 import { toast } from 'react-toastify';
 
 export const createPost = async (postData) => { 
-
-    console.log(postData,"postData");
+ 
 
     try {
         const profileId = window.localStorage.getItem("profileId"); 
@@ -24,8 +23,7 @@ export const createPost = async (postData) => {
           }
     
         const address = await getAddress();
-
-        console.log(address,"address");
+ 
     
         await postData.login(address);
     
@@ -71,10 +69,8 @@ export const createPost = async (postData) => {
     
     
     
-        const result = await createPostTypedData(createPostRequest);
-        console.log(result,"result");
-        const typedData = result.data.createPostTypedData.typedData;
-    console.log(typedData,"typedData");
+        const result = await createPostTypedData(createPostRequest); 
+        const typedData = result.data.createPostTypedData.typedData; 
         const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
         console.log(signature,"signature");
         const { v, r, s } = splitSignature(signature);

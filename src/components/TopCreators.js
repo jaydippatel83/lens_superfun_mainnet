@@ -23,8 +23,7 @@ function TopCreators() {
             const res = await exploreProfile(); 
             // setStory(res.exploreProfiles.items);
             const dd= await getPublicationByUser(offset); 
-            setOffset(dd.data.explorePublications.pageInfo.next);
-            console.log(dd,"dd");
+            setOffset(dd.data.explorePublications.pageInfo.next); 
             dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{  
                 if(e.__typename == "Comment"){
                     user.push(e.mainPost.profile);

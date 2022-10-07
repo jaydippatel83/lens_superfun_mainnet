@@ -20,18 +20,22 @@ function TopCreators() {
         var arry = [];
         var user = [];
 
-            const res = await exploreProfile(); 
+            const res = await exploreProfile();  
             // setStory(res.exploreProfiles.items);
             const dd= await getPublicationByUser(offset); 
-            setOffset(dd.data.explorePublications.pageInfo.next); 
-            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{  
-                if(e.__typename == "Comment"){
-                    user.push(e.mainPost.profile);
-                }else if (e.__typename == "Mirror"){
-                    user.push(e.mirrorOf.profile);
-                }else{
-                    user.push(e.profile);
-                }
+            // setOffset(dd.data.explorePublications.pageInfo.next); 
+            setOffset(res.exploreProfiles.pageInfo.next); 
+
+            res.exploreProfiles.items && res.exploreProfiles.items.map((e)=>{  
+                // setStory(e)
+                // console.log(e,"ee");
+                // if(e.__typename == "Comment"){
+                    user.push(e);
+                // }else if (e.__typename == "Mirror"){
+                //     user.push(e.mirrorOf.profile);
+                // }else{
+                //     user.push(e.profile);
+                // }
             })
             setStory(user)
             const q = query(collection(db, "profiles")); 
@@ -102,7 +106,7 @@ function TopCreators() {
         return res;
     }
     return e; 
-  }
+  } 
 
 
     return (
@@ -125,7 +129,8 @@ function TopCreators() {
                     }
                     <Slider {...settings}>
                         {
-                           story && story.filter((x,i,a)=> a.indexOf(x)==i).map((e) => {  
+                        //    story && story.filter((x,i,a)=> a.indexOf(x)==i).map((e) => {  
+                            story && story.map((e) => {  
                                 return (
                                     <div key={e.id}>
                                         <Link

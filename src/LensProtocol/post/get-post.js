@@ -324,7 +324,7 @@ export const posts = async (profileId) => {
     const request = {
     profileId  : profileId ? profileId : "0x40bf",
     publicationTypes: ['POST'],
-    // sources: ['superfun'], 
+    sources: ['superfun'], 
   };  
     const result = await getPublicationsRequest(request);  
     return result;
@@ -334,7 +334,7 @@ export const postsByComment = async (profileId) => {
   const request = {
   profileId  : profileId ? profileId : "0x40bf",
   publicationTypes: [ 'COMMENT'],
-  // sources: ['superfun'], 
+  sources: ['superfun'], 
 };  
   const result = await getPublicationsRequest(request);  
   return result;
@@ -345,7 +345,7 @@ export const postsByMirror = async (profileId) => {
   const request = {
   profileId  : profileId ? profileId : "0x40bf",
   publicationTypes: ['MIRROR'],
-  // sources: ['superfun'], 
+  sources: ['superfun'], 
 };  
   const result = await getPublicationsRequest(request);  
   return result;
@@ -354,7 +354,7 @@ export const postsByMirror = async (profileId) => {
 export const getComments = async (profileId) => { 
   const request = {
     commentsOf:profileId ? profileId : "0x09a3-0x04",
-    // sources: ['superfun'], 
+    sources: ['superfun'], 
   };  
   const result = await getPublicationsRequest(request);   
 

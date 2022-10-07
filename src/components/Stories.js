@@ -111,7 +111,7 @@ function Stories() {
                                 >
                                     <img
                                         src={`${item.mainPost ? replaceUrl(item?.mainPost?.metadata?.media[0]?.original?.url) : replaceUrl(item?.metadata?.media[0]?.original?.url)} `}
-                                        srcSet={`${item.mainPost ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url} `}
+                                        srcSet={`${item.mainPost ? replaceUrl(item?.mainPost?.metadata?.media[0]?.original?.url) : replaceUrl(item?.metadata?.media[0]?.original?.url)} `}
                                         alt={item.mainPost ? item?.mainPost?.metadata?.name : item?.metadata?.name}
                                         loading="lazy"
                                         width="100%" style={{ borderRadius: '10px', height: '300px', cursor: 'pointer', objectFit: 'fill' }}

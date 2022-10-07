@@ -226,9 +226,9 @@ export default function Header() {
                             </div>
                             <List   style={{position:'absolute',top:'60px', background:'black',maxHeight:'400px', overflowY:'scroll'}}>
                             {
-                                searchData && searchData.map((e) => {
+                                searchData && searchData.map((e,i) => {
                                     return (
-                                        <ListItem  button key={e.handle} onClick={() => handleNavigate(e.profileId)} >
+                                        <ListItem  button key={i} onClick={() => handleNavigate(e.profileId)} >
                                             <ListItemAvatar>
                                                 <Avatar src={e.picture == null ? 'assets/bg.png' : e.picture.original && e.picture.original.url}>
                                                 </Avatar>
@@ -263,7 +263,7 @@ export default function Header() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <div onClick={handleOpenUserMenu} style={{ cursor: 'pointer' }} className="d-flex">
-                                    <Avatar alt={profile.handle} src={profile.picture != null ? profile?.picture?.original?.url : "assets/bg.png"} />
+                                    <Avatar alt="" src={profile?.picture != null ? profile?.picture?.original?.url : "assets/bg.png"} />
                                     {
                                         profile && <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
                                             <p className='text-center m-1'>{profile.name != null ? profile.name : profile.handle}</p>

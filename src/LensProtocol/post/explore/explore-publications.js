@@ -8,7 +8,7 @@ const EXPLORE_PUBLICATIONS = `
       items {
         __typename 
         ... on Post {
-          ...PostFields
+          ...PostFields 
         }
         ... on Comment {
           ...CommentFields
@@ -353,7 +353,7 @@ export const getPublicationByLatest= async()=>{
     const query =  {
         "sortCriteria": "LATEST", 
         "publicationTypes": ['POST'],  
-        // "sources": ["superfun"], 
+        "sources": ["superfun"], 
         "limit": 50,
      }
 
@@ -375,7 +375,7 @@ export const getPublicationByUser= async(data)=>{
   const query =  {
       "sortCriteria": "LATEST", 
       "publicationTypes": ['POST','COMMENT', 'MIRROR'],  
-      // "sources": ["superfun"], 
+      "sources": ["superfun"], 
       // "timestamp": data.timestamp,
       "limit": 50,
       "cursor": data

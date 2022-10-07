@@ -62,9 +62,10 @@ export default function TrendingSlider() {
     }
 
     const replaceUrl = (e) => {
-        const str = e && e.startsWith("ipfs://");
+        const str = e && e.startsWith("ipfs://"); 
         if (str) {
             const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7);
+            console.log(res,"res");
             return res;
         }
         return e;
@@ -112,7 +113,7 @@ export default function TrendingSlider() {
                                 >
                                     <img
                                         src={`${item.mainPost ? replaceUrl(item?.mainPost?.metadata?.media[0]?.original?.url) : replaceUrl(item?.metadata?.media[0]?.original?.url)} `}
-                                        srcSet={`${item.mainPost ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url} `}
+                                        srcSet={`${item.mainPost ? replaceUrl(item?.mainPost?.metadata?.media[0]?.original?.url) : replaceUrl(item?.metadata?.media[0]?.original?.url)} `}
                                         alt="superfun"
                                         loading="lazy"
 

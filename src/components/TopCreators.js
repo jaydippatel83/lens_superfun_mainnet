@@ -8,6 +8,7 @@ import { db } from '../firebase/firebase';
 import Blockies from 'react-blockies'
 import { exploreProfile } from '../LensProtocol/profile/explore-profiles';
 import { getPublicationByUser } from '../LensProtocol/post/explore/explore-publications';
+import { isFollowProfile } from '../LensProtocol/follow/FreeFollow';
  
 function TopCreators() {
 
@@ -18,8 +19,7 @@ function TopCreators() {
     useEffect(() => {
         async function getCreator() {
         var arry = [];
-        var user = [];
-
+        var user = []; 
             const res = await exploreProfile();  
             // setStory(res.exploreProfiles.items);
             const dd= await getPublicationByUser(offset); 

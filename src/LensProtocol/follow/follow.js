@@ -35,8 +35,7 @@ export const follow = async (profileId) => {
       },
     });
     
-    const indexedResult = await pollUntilIndexed(tx.hash); 
-    console.log('follow: indexedResult', indexedResult);
+    const indexedResult = await pollUntilIndexed(tx.hash);  
     const logs = indexedResult.txReceipt.logs; 
     return logs;
   };

@@ -97,7 +97,8 @@ export default function ProfileCreation() {
 
   return (
     <div>
-      < MenuItem onClick={handleClickOpen} className='m-2'  >  Create Profile</MenuItem>
+      
+      < MenuItem className='m-2'  ><a className="m-0" target="_blank" href="https://claim.lens.xyz/" >Create Profile</a></MenuItem>
 
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>Create Profile</DialogTitle>

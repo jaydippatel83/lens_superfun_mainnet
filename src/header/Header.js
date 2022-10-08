@@ -40,7 +40,7 @@ import SearchIcon from '@mui/icons-material/Search';
 const pages = [
     {
         name: 'Home',
-        path: 'trending'
+        path: ''
     },
     // {
     //     name: 'PFPs',
@@ -287,7 +287,9 @@ export default function Header() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <UpdateProfile />
+                                {
+                                    profile && <UpdateProfile />
+                                } 
                                 <ProfileCreation />
                                 {
                                     profile && <MenuItem className='m-2' onClick={disconnectWallet}> Disconnect </MenuItem>

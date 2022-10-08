@@ -252,7 +252,7 @@ function TrendingDetails() {
     }
     return e; 
   }
- 
+  
 
   return (
     <>
@@ -327,7 +327,7 @@ function TrendingDetails() {
                     <div className='m-2' style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                       <div className="d-flex justify-content-around mt-2">
                         <div className="p-0">
-                          <Avatar src={data ? data.img : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
+                          <Avatar src={profile?.picture != null ? profile?.picture?.original?.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
                         </div>
                         <form className="col-10 header-search ms-3 d-flex align-items-center">
                           <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>

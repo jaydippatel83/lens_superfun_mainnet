@@ -36,6 +36,7 @@ import Tab from '@mui/material/Tab';
 import Profile_comment from './profile/Profile_comment';
 import Profile_Mirror from './profile/Profile_Mirror'; 
 import Profile_Likes from './profile/Profile_Likes';
+import { isFollowProfile } from '../LensProtocol/follow/FreeFollow';
 
 
 function TabPanel(props) {
@@ -92,6 +93,7 @@ function Profile() {
     const [displayCmt, setDisplayCmt] = useState([]); 
 
     const [value, setValue] = React.useState(0);
+    const [isFl, setIsFl] = React.useState(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -124,9 +126,20 @@ function Profile() {
 
     useEffect(() => {
         getProfile(); 
-    }, [loading, update, likeUp, params.id])
+       data != undefined && getIsFollow();
+    }, [loading, update, likeUp, params.id,data])
+ 
 
-
+async function getIsFollow(){
+    const req = [
+        {
+          followerAddress:   data.ownedBy,
+          profileId: data.id
+        } 
+      ];
+  const followData =  await  isFollowProfile(req);
+  setIsFl(followData.data.doesFollow[0].follows);
+}
 
     
 
@@ -172,7 +185,7 @@ function Profile() {
                 toast.success("Success!!")
                 setLoadingC(false);
                 setUpdate(!update);
-            }
+            } 
         } catch (error) {
             toast.error(error);
             setLoadingC(false);
@@ -189,6 +202,7 @@ function Profile() {
         }
         return e; 
       }
+ 
      
     return (
         < >
@@ -211,7 +225,7 @@ function Profile() {
                                         <h5 className='pt-4' style={{ fontWeight: '600' }}>{data.handle}</h5>
                                         <h6 className='' style={{ fontWeight: '600' }}>{`@${data.handle.trim().toLowerCase()}`}</h6>
                                         {/* <p>{e.description}</p> */}
-                                        <Button variant='outlined' onClick={() => handleFollow(data.id)}>{loading ? <CircularProgress /> : "Follow"}</Button>
+                                        <Button variant='outlined' onClick={() => handleFollow(data.id)}>{loading ? <CircularProgress /> : isFl == true ? "Follow" : "Followed" }</Button>
                                     </div>
                                     {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
                                     <FollowModal data={data} open={open} close={handleClose} title={title} />

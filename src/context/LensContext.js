@@ -50,7 +50,7 @@ export const LensAuthContextProvider = (props) => {
         window.localStorage.setItem("connectorId", "injected");
       }
     }
-    getWalletAddress()
+    // getWalletAddress()
   }, [update])
 
   const id = window.localStorage.getItem("profileId");
@@ -59,7 +59,7 @@ export const LensAuthContextProvider = (props) => {
   useEffect(() => {
     async function getProfile() {
       if (id !== null) {
-        const user = await profileById(id); 
+        const user = await profileById(id);
         setProfile(user);
       }
 
@@ -70,14 +70,14 @@ export const LensAuthContextProvider = (props) => {
 
 
   async function getPosts() {
-    let array =[];
-    const post = await posts(id); 
-    const data = await getPublicationByLatest();  
-    data.data && data.data.explorePublications.items.map((e)=>{ 
+    let array = [];
+    const post = await posts(id);
+    const data = await getPublicationByLatest();
+    data.data && data.data.explorePublications.items.map((e) => {
       array.push(e);
     })
-    setUserPosts(array); 
-  } 
+    setUserPosts(array);
+  }
 
   const AUTHENTICATION = `
   mutation($request: SignedAuthChallenge!) { 
@@ -147,7 +147,7 @@ export const LensAuthContextProvider = (props) => {
 
     let decodedRefresh = jwt_decode(refreshToken);
     let decodedAccess = jwt_decode(accessToken);
- 
+
     //Check if the accessToken is expired or not
     if (decodedAccess.exp > Date.now() / 1000) {
       return true;
@@ -166,7 +166,7 @@ export const LensAuthContextProvider = (props) => {
         console.error(e);
         return false;
       }
-    } 
+    }
     return false;
   };
 
@@ -183,29 +183,33 @@ export const LensAuthContextProvider = (props) => {
 
 
 
-  const login = async () => { 
+  const login = async () => {
     try {
       const address = await getAddress();
-    const isTokenValid = await refresh();
-    if (isTokenValid) {
-      console.log("login: already logged in");
-      return;
-    }
-    const challengeResponse = await generateChallenge(address);
-    const signature = await signText(challengeResponse.data.challenge.text);
-    const accessTokens = await authenticate(address, signature);
-    const profiles = await profileByAddress(address); 
-    if(profiles === undefined){
-      toast.error("Please create a Profile");
-      // web3Modal.clearCachedProvider();
-      window.localStorage.removeItem("accessToken");
-      window.localStorage.removeItem("refreshToken");
-      window.localStorage.removeItem("profileId");
-    } 
-    window.localStorage.setItem("profileId", profiles?.id);
-    setUpdate(!update)  
-    window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
-    window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
+      setUserAdd(address);
+      const isTokenValid = await refresh();
+      if (isTokenValid) {
+        console.log("login: already logged in");
+        return;
+      }
+      const challengeResponse = await generateChallenge(address);
+      const signature = await signText(challengeResponse.data.challenge.text);
+      const accessTokens = await authenticate(address, signature);
+      const profiles = await profileByAddress(address);
+      if (profiles === undefined) {
+        toast.error("Please create a Profile");
+        // web3Modal.clearCachedProvider();
+        window.localStorage.removeItem("accessToken");
+        window.localStorage.removeItem("refreshToken");
+        window.localStorage.removeItem("profileId");
+        setUpdate(!update) 
+      } else {
+        window.localStorage.setItem("profileId", profiles?.id);
+        setUpdate(!update)
+        window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
+        window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
+      }
+     
     } catch (error) {
       toast.error(error);
     }
@@ -213,7 +217,7 @@ export const LensAuthContextProvider = (props) => {
   };
 
 
-  const loginCreate = async () => { 
+  const loginCreate = async () => {
     const address = await getAddress();
     const isTokenValid = await refresh();
     if (isTokenValid) {
@@ -222,7 +226,7 @@ export const LensAuthContextProvider = (props) => {
     }
     const challengeResponse = await generateChallenge(address);
     const signature = await signText(challengeResponse.data.challenge.text);
-    const accessTokens = await authenticate(address, signature);  
+    const accessTokens = await authenticate(address, signature);
     window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
     window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
 

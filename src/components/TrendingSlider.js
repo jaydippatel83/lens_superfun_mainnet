@@ -64,8 +64,7 @@ export default function TrendingSlider() {
     const replaceUrl = (e) => {
         const str = e && e.startsWith("ipfs://"); 
         if (str) {
-            const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7);
-            console.log(res,"res");
+            const res = 'https://superfun.infura-ipfs.io/ipfs/' + e.slice(7); 
             return res;
         }
         return e;

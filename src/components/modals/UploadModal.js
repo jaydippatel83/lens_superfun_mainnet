@@ -78,6 +78,11 @@ export default function UploadModal() {
     };
 
     const handleUpload = async () => { 
+        const fId = window.localStorage.getItem("profileId");
+        if(fId == undefined){
+            toast.error("Please Login First!");
+            return;
+        }
         try {
             setLoading(true);
         const postData = {

@@ -153,7 +153,9 @@ async function getIsFollow(){
 
     const handleFollow = async (id) => {
         const fId = window.localStorage.getItem("profileId");
-        setLoading(true);
+       try {
+        if(fId != undefined){
+            setLoading(true);
         const data = {
             id: id,
             login: login,
@@ -166,6 +168,15 @@ async function getIsFollow(){
             toast.success("Followed!");
         }
         await getProfile();
+        setLoading(false);
+        } else{
+            toast.error("Please Login First!")
+        }
+
+       } catch (error) {
+        toast.error(error)
+        setLoading(false);
+       }
     }
 
     const handleComment = async (data) => {
